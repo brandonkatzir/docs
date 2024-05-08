@@ -45,42 +45,42 @@ For testing FOLIO installation on a PC, it's recommended to use Vagrant to separ
 
 1. Install Vagrant.
 
-See the Vagrant [download and installation instructions](https://developer.hashicorp.com/vagrant/downloads).
+   See the Vagrant [download and installation instructions](https://developer.hashicorp.com/vagrant/downloads).
 
 2. Install a virtualization product.
 
-For Windows, [install VirtualBox](https://www.virtualbox.org/).
+   For Windows, [install VirtualBox](https://www.virtualbox.org/).
 
 3. Install an Ubuntu box.
 
-Create a `Vagrantfile` like the following.
+   Create a `Vagrantfile` like the following.
 
-```
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+   ```
+   # -*- mode: ruby -*-
+   # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/focal64"
+   Vagrant.configure("2") do |config|
+     config.vm.box = "ubuntu/focal64"
 
-  config.vm.network "forwarded_port", guest: 9130, host: 9130
-  config.vm.network "forwarded_port", guest: 80, host: 80
-  config.vm.network "forwarded_port", guest: 9200, host: 9200
+     config.vm.network "forwarded_port", guest: 9130, host: 9130
+     config.vm.network "forwarded_port", guest: 80, host: 80
+     config.vm.network "forwarded_port", guest: 9200, host: 9200
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "49152"
-  end
-end
-```
+     config.vm.provider "virtualbox" do |vb|
+       vb.memory = "49152"
+     end
+   end
+   ```
 
-Run `vagrant up` in the folder with the Vagrantfile.
+   Run `vagrant up` in the folder with the Vagrantfile.
 
 4. SSH into the Vagrant box.
 
-```
-vagrant ssh
-```
+   ```
+   vagrant ssh
+   ```
 
-For a Vagrant-based installation, all of the following instructions assume you are working within the Vagrant enviornment via `vagrant ssh`. You will likely want to open additional ssh connections to the box for later steps such as following changes to the Okapi log file.
+   For a Vagrant-based installation, all of the following instructions assume you are working within the Vagrant enviornment via `vagrant ssh`. You will likely want to open additional ssh connections to the box for later steps such as following changes to the Okapi log file.
 
 ## Installing Okapi
 
@@ -88,125 +88,125 @@ For a Vagrant-based installation, all of the following instructions assume you a
 
 1. Update the APT cache.
 
-```
-sudo apt update
-```
+   ```
+   sudo apt update
+   ```
 
 2. Install Java 11 and verify that Java 11 is the system default.
-```
-sudo apt -y install openjdk-11-jdk
-sudo update-java-alternatives --jre-headless --jre --set java-1.11.0-openjdk-amd64
-```
+   ```
+   sudo apt -y install openjdk-11-jdk
+   sudo update-java-alternatives --jre-headless --jre --set java-1.11.0-openjdk-amd64
+   ```
 
-3. Import the PostgreSQL signing key, add the PostgreSQL apt repository and install PostgreSQL.
-```
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main"
-sudo apt update
-sudo apt -y install postgresql-12 postgresql-client-12 postgresql-contrib-12 libpq-dev
-```
+3. Import the PostgreSQL signing key, add the PostgreSQL apt repository, and install PostgreSQL.
+   ```
+   wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+   sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main"
+   sudo apt update
+   sudo apt -y install postgresql-12 postgresql-client-12 postgresql-contrib-12 libpq-dev
+   ```
 
 4. Configure PostgreSQL to listen on all interfaces and allow connections from all addresses (to allow Docker connections).
 
-* Edit (via sudo) the file **/etc/postgresql/12/main/postgresql.conf** to add line **listen_addresses = '\*'** in the "Connection Settings" section.
-* In the same file, increase **max_connections** (e.g. to 500)
-* Edit (via sudo) the file **/etc/postgresql/12/main/pg_hba.conf** to add line **host all all 0.0.0.0/0 md5**
-* Restart PostgreSQL with command **sudo systemctl restart postgresql**
+   * Edit (via sudo) the file **/etc/postgresql/12/main/postgresql.conf** to add line **listen_addresses = '\*'** under the "Connection Settings" line in the "Connections and Authentication" setting.
+   * In the same file, increase **max_connections** (e.g. to 500). Save and close the file.
+   * Edit (via sudo) the file **/etc/postgresql/12/main/pg_hba.conf** to add line **host all all 0.0.0.0/0 md5**
+   * Restart PostgreSQL with command **sudo systemctl restart postgresql**
 
 5. Import the Docker signing key, add the Docker apt repository and install the Docker engine.
-```
-sudo apt -y install apt-transport-https ca-certificates gnupg-agent software-properties-common
-wget --quiet -O - https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt update
-sudo apt -y install docker-ce docker-ce-cli containerd.io
-```
+   ```
+   sudo apt -y install apt-transport-https ca-certificates gnupg-agent software-properties-common
+   wget --quiet -O - https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   sudo add-apt-repository "deb https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+   sudo apt update
+   sudo apt -y install docker-ce docker-ce-cli containerd.io
+   ```
 
 6. Configure Docker engine to listen on network socket.
 
-- Create a configuration folder for Docker if it does not exist.  
+   - Create a configuration folder for Docker if it does not exist.
 
-```
-sudo mkdir -p /etc/systemd/system/docker.service.d
-```
+     ```
+     sudo mkdir -p /etc/systemd/system/docker.service.d
+     ```
 
-- Create a configuration file **/etc/systemd/system/docker.service.d/docker-opts.conf** with the following content.
+   - Create a configuration file **/etc/systemd/system/docker.service.d/docker-opts.conf** with the following content.
 
-```
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:4243
-```
+     ```
+     [Service]
+     ExecStart=
+     ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:4243
+     ```
 
-- Restart Docker.
+   - Restart Docker.
 
-```
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-```
+     ```
+     sudo systemctl daemon-reload
+     sudo systemctl restart docker
+     ```
 
 7. Install docker-compose.
 
-Follow the instructions from official documentation for [docker](https://docs.docker.com/compose/install/). The instructions may vary depending on the architecture and operating system of your server, but in most cases the following commands will work.
+   Follow the instructions from official documentation for [docker](https://docs.docker.com/compose/install/). The instructions may vary depending on the architecture and operating system of your server, but in most cases the following commands will work.
 
-```
-sudo curl -L \
-  "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" \
-  -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
+   ```
+   sudo curl -L \
+     "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" \
+     -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+   ```
 
 8. Install Apache Kafka and Apache ZooKeeper.  Apache Kafka and Apache ZooKeeper are required by FOLIO [mod-pubsub](https://github.com/folio-org/mod-pubsub).  Both Kafka and ZoopKeepr are installed below using docker-compose.
 
-Take into account that you have to change the **KAFKA_ADVERTISED_LISTENERS** value for the private IP of your server, instead of 10.0.2.15 for a Vagrant box.
+   Take into account that you have to change the **KAFKA_ADVERTISED_LISTENERS** value for the private IP of your server, instead of 10.0.2.15 for a Vagrant box.
 
-```
-mkdir ~/folio-install
-cd folio-install
-vim docker-compose-kafka-zk.yml
-```
+   ```
+   mkdir ~/folio-install
+   cd folio-install
+   vim docker-compose-kafka-zk.yml
+   ```
 
-Insert this content into the file. Change the IP Address in KAFKA_ADVERTISED_LISTENERS to the local IP of your server on which you run Kafka:
-```
-version: '2'
-services:
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
-    restart: always
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    container_name: kafka
-    restart: always
-    ports:
-      - "9092:9092"
-      - "29092:29092"
-    environment:
-      KAFKA_LISTENERS: INTERNAL://:9092,LOCAL://:29092
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://<YOUR_IP_ADDRESS>:9092,LOCAL://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LOCAL:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_BROKER_ID: 1
-      KAFKA_LOG_RETENTION_BYTES: -1
-      KAFKA_LOG_RETENTION_HOURS: -1
-```
+   Insert this content into the file. Change the IP Address in KAFKA_ADVERTISED_LISTENERS to the local IP of your server on which you run Kafka:
+   ```
+   version: '2'
+   services:
+     zookeeper:
+       image: wurstmeister/zookeeper
+       container_name: zookeeper
+       restart: always
+       ports:
+         - "2181:2181"
+     kafka:
+       image: wurstmeister/kafka
+       container_name: kafka
+       restart: always
+       ports:
+         - "9092:9092"
+         - "29092:29092"
+       environment:
+         KAFKA_LISTENERS: INTERNAL://:9092,LOCAL://:29092
+         KAFKA_ADVERTISED_LISTENERS: INTERNAL://<YOUR_IP_ADDRESS>:9092,LOCAL://localhost:29092
+         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LOCAL:PLAINTEXT,INTERNAL:PLAINTEXT
+         KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+         KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+         KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+         KAFKA_BROKER_ID: 1
+         KAFKA_LOG_RETENTION_BYTES: -1
+         KAFKA_LOG_RETENTION_HOURS: -1
+   ```
 
-**Note**: The IP address <YOUR_IP_ADDRESS> should match the private IP of your server.  This IP address should be reachable from Docker containers.  Therefore, you can not use localhost.  
+   **Note**: The IP address <YOUR_IP_ADDRESS> should match the private IP of your server.  This IP address should be reachable from Docker containers.  Therefore, you can not use localhost. 
 
-- For a Vagrant installation, the IP address should be 10.0.2.15.
+   - For a Vagrant installation, the IP address should be 10.0.2.15.
 
-You can use the /**ifconfig** command in order to determine the private IP. 
+   You can use the /**ifconfig** command in order to determine the private IP.
 
-```
-sudo mkdir /opt/kafka-zk
-sudo cp ~/folio-install/docker-compose-kafka-zk.yml /opt/kafka-zk/docker-compose.yml
-cd /opt/kafka-zk
-sudo docker-compose up -d
-```
+   ```
+   sudo mkdir /opt/kafka-zk
+   sudo cp ~/folio-install/docker-compose-kafka-zk.yml /opt/kafka-zk/docker-compose.yml
+   cd /opt/kafka-zk
+   sudo docker-compose up -d
+   ```
 
 ### Create a database and role for Okapi
 
@@ -214,22 +214,22 @@ You will need to create one database in PostgreSQL to persist the Okapi configur
 
 1. Log into the PostgreSQL server as a superuser.
 
-```
-sudo su -c psql postgres postgres
-```
+   ```
+   sudo su -c psql postgres postgres
+   ```
 
 2. Create a database role for Okapi and a database to persist Okapi configuration.
-```
-CREATE ROLE okapi WITH PASSWORD 'okapi25' LOGIN CREATEDB;
-CREATE DATABASE okapi WITH OWNER okapi ENCODING 'UTF-8' LC_COLLATE 'und-x-icu' LC_CTYPE 'und-x-icu' TEMPLATE template0;
-```
+   ```
+   CREATE ROLE okapi WITH PASSWORD 'okapi25' LOGIN CREATEDB;
+   CREATE DATABASE okapi WITH OWNER okapi;
+   ```
 
 3. Create a database role and database to persist tenant data.
 
-```
-CREATE ROLE folio WITH PASSWORD 'folio123' LOGIN SUPERUSER;
-CREATE DATABASE folio WITH OWNER folio ENCODING 'UTF-8' LC_COLLATE 'und-x-icu' LC_CTYPE 'und-x-icu' TEMPLATE template0;
-```
+   ```
+   CREATE ROLE folio WITH PASSWORD 'folio123' LOGIN SUPERUSER;
+   CREATE DATABASE folio WITH OWNER folio;
+   ```
 
 4. Exit psql with **\q** command
 
@@ -239,118 +239,118 @@ Once you have installed the requirements for Okapi and created a database, you c
 
 1. Import the FOLIO signing key, add the FOLIO apt repository and install okapi.
 
-```
-wget --quiet -O - https://repository.folio.org/packages/debian/folio-apt-archive-key.asc | sudo apt-key add -
-sudo add-apt-repository "deb https://repository.folio.org/packages/ubuntu focal/"
-sudo apt update
-sudo apt-get -y --allow-change-held-packages install okapi=4.13.2-1 # R1-2022 Okapi version
-sudo apt-mark hold okapi
-```
+   ```
+   wget --quiet -O - https://repository.folio.org/packages/debian/folio-apt-archive-key.asc | sudo apt-key add -
+   sudo add-apt-repository "deb https://repository.folio.org/packages/ubuntu focal/"
+   sudo apt update
+   sudo apt-get -y --allow-change-held-packages install okapi=4.13.2-1 # R1-2022 Okapi version
+   sudo apt-mark hold okapi
+   ```
 
-Please note that the R1-2022 FOLIO release version of Okapi is 4.13.2-1.  If you do not explicitly set the Okapi version, you will install the latest Okapi release.  There is some risk with installing the latest Okapi release.  The latest release may not have been tested with the rest of the components in the official release.
+   Please note that the R1-2022 FOLIO release version of Okapi is 4.13.2-1.  If you do not explicitly set the Okapi version, you will install the latest Okapi release.  There is some risk with installing the latest Okapi release.  The latest release may not have been tested with the rest of the components in the official release.
 
 2. Configure Okapi to run as a single node server with persistent storage.
 
-- Edit (via sudo) file **/etc/folio/okapi/okapi.conf** to reflect the following changes: 
+   - Edit (via sudo) file **/etc/folio/okapi/okapi.conf** to reflect the following changes:
 
-```
-role="dev"
-port_end="9340"
-host="<YOUR_IP_ADRESS>"
-storage="postgres"
-okapiurl="http://<YOUR_IP_ADDRESS>:9130"
-docker_registries -- See explanation in okapi.conf file. Default is unauthenticated.
-log4j_config=“/etc/folio/okapi/log4j2.properties”
-```
+   ```
+   role="dev"
+   port_end="9340"
+   host="<YOUR_IP_ADRESS>"
+   storage="postgres"
+   okapiurl="http://<YOUR_IP_ADDRESS>:9130"
+   docker_registries -- See explanation in okapi.conf file. Default is unauthenticated.
+   log4j_config=“/etc/folio/okapi/log4j2.properties”
+   ```
 
-**Note**: The properties **postgres_host**, **postgres_port**, **postgres_username**, **postgres_password**, **postgres_database** should be configured in order to match the PostgreSQL configurations made previously.
+   **Note**: The properties **postgres_host**, **postgres_port**, **postgres_username**, **postgres_password**, **postgres_database** should be configured in order to match the PostgreSQL configurations made previously.
 
-Edit (via sudo) log4j2.properties. Make sure Okapi logs into a file and define a RollingFileAppender :
-````
-appenders = f
+   Edit (via sudo) log4j2.properties. Make sure Okapi logs into a file and define a RollingFileAppender :
+   ````
+   appenders = f
 
-appender.f.type = RollingFile
-appender.f.name = File
-appender.f.fileName = /var/log/folio/okapi/okapi.log
-appender.f.filePattern = /var/log/folio/okapi/okapi-%i.log
-appender.f.layout.type = PatternLayout
-appender.f.layout.pattern = %d{HH:mm:ss} [$${FolioLoggingContext:requestid}] [$${FolioLoggingContext:tenantid}] [$${FolioLoggingContext:userid}] [$${FolioLoggingContext:moduleid}] %-5p %-20.20C{1} %m%n
-appender.f.policies.type = Policies
-appender.f.policies.size.type = SizeBasedTriggeringPolicy
-appender.f.policies.size.size = 200MB
-appender.f.strategy.type = DefaultRollOverStrategy
-appender.f.strategy.max = 10
+   appender.f.type = RollingFile
+   appender.f.name = File
+   appender.f.fileName = /var/log/folio/okapi/okapi.log
+   appender.f.filePattern = /var/log/folio/okapi/okapi-%i.log
+   appender.f.layout.type = PatternLayout
+   appender.f.layout.pattern = %d{HH:mm:ss} [$${FolioLoggingContext:requestid}] [$${FolioLoggingContext:tenantid}] [$${FolioLoggingContext:userid}] [$${FolioLoggingContext:moduleid}] %-5p %-20.20C{1} %m%n
+   appender.f.policies.type = Policies
+   appender.f.policies.size.type = SizeBasedTriggeringPolicy
+   appender.f.policies.size.size = 200MB
+   appender.f.strategy.type = DefaultRollOverStrategy
+   appender.f.strategy.max = 10
 
-rootLogger.level = info
-rootLogger.appenderRefs = f
-rootLogger.appenderRef.f.ref = File
-````
+   rootLogger.level = info
+   rootLogger.appenderRefs = f
+   rootLogger.appenderRef.f.ref = File
+   ````
 
 3. Restart Okapi
 
-```
-sudo systemctl daemon-reload
-sudo systemctl restart okapi
-```
-The Okapi log is at **/var/log/folio/okapi/okapi.log**.
+   ```
+   sudo systemctl daemon-reload
+   sudo systemctl restart okapi
+   ```
+   The Okapi log is at **/var/log/folio/okapi/okapi.log**.
 
 
 4. Pull module descriptors from the central registry.
 
-A module descriptor declares the basic module metadata (id, name, etc.), specifies the module's dependencies on other modules (interface identifiers to be precise), and reports all "provided" interfaces. As part of the continuous integration process, each module descriptor  is published to the FOLIO Registry at https://folio-registry.dev.folio.org.
+   A module descriptor declares the basic module metadata (id, name, etc.), specifies the module's dependencies on other modules (interface identifiers to be precise), and reports all "provided" interfaces. As part of the continuous integration process, each module descriptor  is published to the FOLIO Registry at https://folio-registry.dev.folio.org.
 
-```
-curl -w '\n' -D - -X POST -H "Content-type: application/json" \
-   -d '{ "urls": [ "https://folio-registry.dev.folio.org" ] }' \
-  http://localhost:9130/_/proxy/pull/modules
-```
-Okapi log should show something like
+   ```
+   curl -w '\n' -D - -X POST -H "Content-type: application/json" \
+      -d '{ "urls": [ "https://folio-registry.dev.folio.org" ] }' \
+     http://localhost:9130/_/proxy/pull/modules
+   ```
+   Okapi log should show something like
 
-````
-INFO  ProxyContext         283828/proxy REQ 127.0.0.1:51424 supertenant POST /_/proxy/pull/modules  okapi-4.13.2
-INFO  PullManager          Remote registry at https://folio-registry.dev.folio.org is version 4.13.2
-INFO  PullManager          pull smart
-  ...
-INFO  PullManager          pull: 3466 MDs to insert
-INFO  ProxyContext         283828/proxy RES 200 93096323us okapi-4.13.2 /_/proxy/pull/modules
-````
+   ````
+   INFO  ProxyContext         283828/proxy REQ 127.0.0.1:51424 supertenant POST /_/proxy/pull/modules  okapi-4.13.2
+   INFO  PullManager          Remote registry at https://folio-registry.dev.folio.org is version 4.13.2
+   INFO  PullManager          pull smart
+     ...
+   INFO  PullManager          pull: 3466 MDs to insert
+   INFO  ProxyContext         283828/proxy RES 200 93096323us okapi-4.13.2 /_/proxy/pull/modules
+   ````
 
-Okapi is up and running!
+   Okapi is up and running!
 
 
 ## Create a new tenant
 
 1. Switch to the working directory.
 
-```
-cd ~/folio-install
-```
+   ```
+   cd ~/folio-install
+   ```
 
 2. Create a tenant.json file:
-```
-{
-  "id" : "diku",
-  "name" : "Datalogisk Institut",
-  "description" : "Danish Library Technology Institute"
-}
-```
+   ```
+   {
+     "id" : "diku",
+     "name" : "Datalogisk Institut",
+     "description" : "Danish Library Technology Institute"
+   }
+   ```
 
 3. Post the tenant initialization to Okapi.
-```
-curl -w '\n' -D - -X POST -H "Content-type: application/json" \
-  -d @tenant.json \
-  http://localhost:9130/_/proxy/tenants
-```
+   ```
+   curl -w '\n' -D - -X POST -H "Content-type: application/json" \
+     -d @tenant.json \
+     http://localhost:9130/_/proxy/tenants
+   ```
 
-**Note**:  In this installation guide, the Datalogisk Institut is used as an example, but you should use the information for your organization.  Take into account that you have to use the id of your tenant in the next steps.
+   **Note**:  In this installation guide, the Datalogisk Institut is used as an example, but you should use the information for your organization.  Take into account that you have to use the id of your tenant in the next steps.
 
 3. Enable the Okapi internal module for the tenant
 
-```
-curl -w '\n' -D - -X POST -H "Content-type: application/json" \
-  -d '{"id":"okapi"}' \
-  http://localhost:9130/_/proxy/tenants/diku/modules
-```
+   ```
+   curl -w '\n' -D - -X POST -H "Content-type: application/json" \
+     -d '{"id":"okapi"}' \
+     http://localhost:9130/_/proxy/tenants/diku/modules
+   ```
 ## Install Elasticsearch 
 
 You have to install elasticsearch (ES) in order to be able to do queries. You need to point the related modules, at least *mod_pubsub* and *mod_search* to your ES installation (this will be described further down).
@@ -362,45 +362,45 @@ Follow this guide to install a three-node Elasticsearch cluster on a Single Serv
 ## Install a Folio Backend
 
 1. Post data source information to the Okapi environment for use by deployed modules. The Okapi environment variables will be picked up by every module that makes use of them during deployment. Supply at least these environment variables:
-```
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_HOST\",\"value\":\"<YOUR_IP_ADDRESS>\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_PORT\",\"value\":\"5432\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_DATABASE\",\"value\":\"folio\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_USERNAME\",\"value\":\"folio\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_PASSWORD\",\"value\":\"folio123\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_HOST\",\"value\":\"<YOUR_IP_ADDRESS>\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_PASSWORD\",\"value\":\"s3cret\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_URL\",\"value\":\"http://<YOUR_IP_ADDRESS>:9200\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_USERNAME\",\"value\":\"elastic\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"INITIAL_LANGUAGES\",\"value\":\"eng, ger, swe\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"KAFKA_HOST\",\"value\":\"<YOUR_IP_ADDRESS>\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"KAFKA_PORT\",\"value\":\"9092\"}" http://localhost:9130/_/env;
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"OKAPI_URL\",\"value\":\"http://<YOUR_IP_ADDRESS>:9130\"}" http://localhost:9130/_/env
-curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"SYSTEM_USER_PASSWORD\",\"value\":\"pub-sub\"}" http://localhost:9130/_/env
-```
+   ```
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_HOST\",\"value\":\"<YOUR_IP_ADDRESS>\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_PORT\",\"value\":\"5432\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_DATABASE\",\"value\":\"folio\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_USERNAME\",\"value\":\"folio\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"DB_PASSWORD\",\"value\":\"folio123\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_HOST\",\"value\":\"<YOUR_IP_ADDRESS>\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_PASSWORD\",\"value\":\"s3cret\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_URL\",\"value\":\"http://<YOUR_IP_ADDRESS>:9200\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"ELASTICSEARCH_USERNAME\",\"value\":\"elastic\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"INITIAL_LANGUAGES\",\"value\":\"eng, ger, swe\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"KAFKA_HOST\",\"value\":\"<YOUR_IP_ADDRESS>\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"KAFKA_PORT\",\"value\":\"9092\"}" http://localhost:9130/_/env;
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"OKAPI_URL\",\"value\":\"http://<YOUR_IP_ADDRESS>:9130\"}" http://localhost:9130/_/env
+   curl -w '\n' -D - -X POST -H "Content-Type: application/json" -d "{\"name\":\"SYSTEM_USER_PASSWORD\",\"value\":\"pub-sub\"}" http://localhost:9130/_/env
+   ```
 
-**Note**: Make sure that you use your private IP for the properties **DB_HOST**, **KAFKA_HOST** and **OKAPI_URL**. (In a Vagrant environment, 10.0.2.15 should work.)  Change passwords as you like, but make sure that you use the same passwords in your installations of the database and elasticsearch. **SYSTEM_USER_PASSWORD** will be used by mod-pubsub and mod-search. It needs to be the same as those used for the system users  *system-user*, *pub-sub* and *mod-search* (and potentially more system generated users). 
-Set the **ELASTICSEARCH_\*** variables so that they point to your Elasticsearch installation.
+   **Note**: Make sure that you use your private IP for the properties **DB_HOST**, **KAFKA_HOST** and **OKAPI_URL**. (In a Vagrant environment, 10.0.2.15 should work.)  Change passwords as you like, but make sure that you use the same passwords in your installations of the database and elasticsearch. **SYSTEM_USER_PASSWORD** will be used by mod-pubsub and mod-search. It needs to be the same as those used for the system users  *system-user*, *pub-sub* and *mod-search* (and potentially more system generated users).
+   Set the **ELASTICSEARCH_\*** variables so that they point to your Elasticsearch installation.
 
-You may at this point also want to set environment variables for modules which are not part of Okapi's global env vars. Follow these instructions [Change Environment Variables of a Module](https://wiki.folio.org/display/SYSOPS/Change+Environment+Variables+of+a+Module) (cf. the section named "When the module has not yet been deployed"). 
+   You may at this point also want to set environment variables for modules which are not part of Okapi's global env vars. Follow these instructions [Change Environment Variables of a Module](https://wiki.folio.org/display/SYSOPS/Change+Environment+Variables+of+a+Module) (cf. the section named "When the module has not yet been deployed").
 
-Confer the module documentations on github to learn about configuration options for the modules by setting environment variables. For example, for mod-search, look at https://github.com/folio-org/mod-search#environment-variables .
-You can also find a list of environment variables for each module at the Overview - Metadata section of the module's page in Folio org’s Dockerhub. For example, for mod-search, this is at https://hub.docker.com/r/folioorg/mod-search.
+   Confer the module documentations on github to learn about configuration options for the modules by setting environment variables. For example, for mod-search, look at https://github.com/folio-org/mod-search#environment-variables .
+   You can also find a list of environment variables for each module at the Overview - Metadata section of the module's page in Folio org’s Dockerhub. For example, for mod-search, this is at https://hub.docker.com/r/folioorg/mod-search.
 
 2. Check out platform-complete.
 
-- Clone the repository
+   - Clone the repository
 
-```
-cd $HOME
-git clone https://github.com/folio-org/platform-complete
-cd platform-complete
-```
-- Checkout the latest stable branch of the repository (one which has undergone bugfest or hotfix testing)
+   ```
+   cd $HOME
+   git clone https://github.com/folio-org/platform-complete
+   cd platform-complete
+   ```
+   - Checkout the latest stable branch of the repository (one which has undergone bugfest or hotfix testing)
 
-```
-git checkout R1-2022-hotfix-2
-```
+   ```
+   git checkout R1-2022-hotfix-2
+   ```
 
 
 3. Deploy and enable the backend modules.

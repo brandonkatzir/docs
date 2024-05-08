@@ -6,15 +6,24 @@ weight: 50
 tags: ["subtopic"]   
 ---
 
+The Courses section of the Settings app is where you manage your terms, course types, course departments, and other courses settings.
+
+## Permissions 
+
+The following are all the permissions for Courses in the Settings app:
+* **Settings (Courses): Can create, edit and delete course settings.** This permission allows users to maintain (view, add, edit, and delete) all course settings.
+* **Settings (Courses): Can view course settings.** This permission allows users to view course settings. They cannot add, edit or delete course settings.
+
+
 ## Settings > Courses > Display settings
 
 This setting controls FOLIO's behavior when duplicating a course in the Courses app via Actions > Duplicate.
 
-If this setting is checked, when duplicating a course the "Duplicate cross-listed courses" checkbox in the Duplicate modal will be checked by default.
+If the user chooses this setting when duplicating a course, the "Duplicate all cross-listed courses" checkbox in the [Duplicate modal](../../../access/courses/courses/#duplicating-a-course) will be checked by default.
 
 ## Settings > Courses > Terms
 
-Use this setting to create and manage Terms. Terms define the start and end date of a course. For example, when adding items to a course, any new item added to the course is automatically assigned the Start Date and End Date as specified in the Term. If needed, you can edit the dates by editing the reserve item.
+Use this setting to create and manage Terms. Terms define the start and end date of a course. For example, when a user adds items to a course, Folio automatically assigns a Start Date and End Date to the new item as specified in the Term. If needed, you can edit the dates by editing the reserve item.
 
 
 ### Creating a term
@@ -33,7 +42,7 @@ Use this setting to create and manage Terms. Terms define the start and end date
 
 ### Deleting a term
 
-1. Find the Term you want to delete and click the **delete icon**.
+1. Find the Term you want to delete and click the **trash can icon**.
 2. In the **Delete Term** dialog, click **Delete**. A confirmation message appears and the term is deleted.
 
 
@@ -59,7 +68,7 @@ Use this setting to create and manage Course Types. Examples of Course Types inc
 
 ### Deleting a course type
 
-1. Find the Course Type you want to delete and click the **delete icon**.
+1. Find the Course Type you want to delete and click the **trash can icon**.
 2. In the **Delete Course Types** dialog, click **Delete**. A confirmation message appears and the term is deleted.
 
 
@@ -79,13 +88,13 @@ Use this setting to create and manage Course Departments. Examples of Course Dep
 ### Editing a course department
 
 1. Find the Course Department you want to edit and click the **pencil icon**.
-2. Edit the **Name **or **Description**.
+2. Edit the **Name** or **Description**.
 3. Click **Save**. The Course Department is saved.
 
 
 ### Deleting a course department
 
-1. Find the Course Department you want to delete and click the **delete icon**.
+1. Find the Course Department you want to delete and click the **trash can icon**.
 2. In the **Delete Department** dialog, click **Delete**. A confirmation message appears and the department is deleted.
 
 
@@ -111,7 +120,7 @@ Use this setting to create and manage Processing Statuses. These statuses are sp
 
 ### Deleting a processing status
 
-1. Find the Processing Status you want to delete and click the **delete icon**.
+1. Find the Processing Status you want to delete and click the **trash can icon**.
 2. In the **Delete Processing Status** dialog, click **Delete**. A confirmation message appears and the status is deleted.
 
 
@@ -137,5 +146,5 @@ Use this setting to create and manage Copyright Statuses. These statuses are spe
 
 ### Deleting a copyright status
 
-1. Find the Processing Status you want to delete and click the **delete icon**.
+1. Find the Processing Status you want to delete and click the **trash can icon**.
 2. In the **Delete Copyright Status** dialog, click **Delete**. A confirmation message appears and the status is deleted.
