@@ -52,6 +52,10 @@ The following are the user access levels that can be granted for a dashboard:
 * **Edit.** This allows the user the same dashboard viewing rights as the View access level and additionally allows the user to edit the dashboard name and description and add, remove or edit widgets on the dashboard. It does not allow the user to make any changes to the user access list for the dashboard.
 * **Manage.** This allows the user the same view and edit rights as the Edit access level and additionally allows the user to add, remove and edit user access levels to the dashboard and to delete the dashboard.
 
+## Keyboard shortcuts
+Keyboard shortcuts allow you to perform actions in this app using the keyboard.  See [Platform essentials > Keyboard shortcuts](< ref "/platform_essentials_keyboard_shortcuts.md" >) for more information.
+
+
 ## Adding widgets
 
 

@@ -206,6 +206,43 @@ Reminder process:
 * The second sequence will create a second reminder with an email using the selected notice template. The email is sent out three plus one equals **four** days after the previous reminder (Saturday in the example). A 3.00 fee is charged.
 * The third sequence will create a third reminder with an email using the selected notice template. The email is sent out three plus one equals **four** days after the previous reminder (Wednesday in the example). A 6.00 fee is charged.
 
+### Reminder fee examples with closed days
+
+#### Create on closed days set to Yes
+
+A reminder fee policy has **Create on closed days** set to **Yes**, and the following schedule of fees:
+
+| Sequence | Interval | Frequency | After             | Fee | Notice method | Notice template | Block template |
+|:----------|:----------|:-----------|:-------------------|:-----|:---------------|:-----------------|:----------------|
+| 1        | 0        | Day(s)    | Overdue           | 3   | Email         | 1st reminder    | noblock        |
+
+Preconditions:
+* Notices are sent out once per day (shortly after midnight).
+* The calendar of the service point where the item is checked out is open on Monday, closed all day Tuesday, and open on Wednesday, Thursday and Friday.
+* An item with the associated reminder fee policy in the above example becomes overdue at 11:59 PM on Tuesday.
+* The item is not returned to the library and the loan is not renewed.
+
+Reminder process:
+* The sequence will create a reminder with an email using the “1st reminder” notice template. The email is sent out shortly after midnight on Wednesday. A 3.00 fee is charged.
+
+#### Create on closed days set to No
+
+A reminder fee policy has **Create on closed days** set to **No**, and the following schedule of fees:
+
+| Sequence | Interval | Frequency | After             | Fee | Notice method | Notice template | Block template |
+|:----------|:----------|:-----------|:-------------------|:-----|:---------------|:-----------------|:----------------|
+| 1        | 0        | Day(s)    | Overdue           | 3   | Email         | 1st reminder    | noblock        |
+
+Preconditions:
+* Notices are sent out once per day (shortly after midnight).
+* The calendar of the service point where the item is checked out is open on Monday, closed all day Tuesday, and open on Wednesday, Thursday and Friday.
+* An item with the associated reminder fee policy in the above example becomes overdue at 11:59 PM on Tuesday.
+* The item is not returned to the library and the loan is not renewed.
+
+Reminder process:
+* Because the service point is closed on Tuesday, no reminder fee is created on Tuesday. The 1st reminder email is sent out shortly after midnight on Thursday. A 3.00 fee is charged.
+
+
 
 ## What happens to a loan when the fine is resolved?
 
