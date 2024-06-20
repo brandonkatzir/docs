@@ -1,18 +1,16 @@
 ---
 title: "Finance"
 linkTitle: "Finance"
-date: 2023-11-13
+date: 2023-04-16
 weight: 10
 tags: ["parenttopic"]
 ---
 
 The Finance app allows you to create fund structures and manage money.
 
-Definitions of terms used in the Finance app:   
+Definitions of terms used in the Finance app:
 
-
-
-*   **Acquisition units.** An additional layer you can add to acquisitions records that restricts a user’s ability to interact with those records unless they have been assigned to that unit. For example, you may create acquisition units to represent the different libraries within your library system. Units are defined and determined by your library in the Settings app. See [Settings > Acquisition units]({{< ref "/settings_acquisition_units.md" >}}) for more information.
+*   **Acquisition units.** An additional layer you can add to acquisitions records that restricts a user’s ability to interact with those records unless they have been assigned to that unit. For example, you may create acquisition units to represent the different libraries within your library system. Units are defined and determined by your library in the Settings app. See [Settings > Acquisition units](../../settings/settings_acquisition_units/settings_acquisition_units/) for more information.
 *   **Amount allocated.** The amount of money assigned to a fund at the start of a fiscal year. Additional money can also be allocated during the year.
 *   **Budget.** A finance record that describes the amount of money available for a fiscal year within a fund that includes a definition of the allowed expenditure percentage and allowed encumbrance percentage. Transfer and allocation transactions are performed against a budget. Expense classes can be assigned to a budget.
 *   **Encumbrance.** An amount of money that the library commits to pay to a vendor from a fund’s budget for ordered materials that are invoiced in the future.
@@ -22,6 +20,7 @@ Definitions of terms used in the Finance app:
 *   **Group.** A collection of one or more funds grouped together.
 *   **Ledger.** A collection of funds that need to be kept fiscally separate from another ledger’s collection of funds.  All funds within a ledger share future fiscal year rollover behavior.
 *   **Net transfers.** Money transferred between funds during a fiscal year.
+*   **Transaction.** A record to keep track of a specific change to a budget. For instance, an allocation, a transfer, an encumbrance, a pending payment or a payment.
 
 
 ## Permissions
@@ -30,8 +29,6 @@ The permissions listed below allow you to interact with the Finance app and dete
 
 Finance permissions:
 
-
-
 *   **Finance: Assign acquisition units to new record.** This permission allows the user to assign acquisition units to the record when creating a new record.
 *   **Finance: Create allocations.** This permission allows users to create allocation transactions against budgets. Must include view and edit fund and budget permissions.
 *   **Finance: Create transfers.** This permission allows users to create transfer transactions against budgets. Must include view and edit fund and budget.
@@ -39,6 +36,8 @@ Finance permissions:
 *   **Finance: Export finance records.** This permission allows the user to run an export of finance records for a ledger.
 *   **Finance: Manage acquisition units.** This permission allows users to change the assignment of acquisition units for the record when editing a record.
 *   **Finance: Manually release encumbrance.** This permission allows the user to release an encumbrance from a fund using the **Release encumbrance** action on the budget transaction log.
+*   **Finance: Recalculate budget totals.** This permission allows the user to recalculate budget totals after having deleted financial transactions by using the **Recalculate budget total** action on the budget record.
+*   **Finance: Unrelease encumbrance.** This permission allows the user to manually unrelease an encumbrance that may have been erroneously released either by an invoice approval or a manual action.
 *   **Finance: View fiscal year.** This permission allows searching and viewing of fiscal year records.
 *   **Finance: View fund and budget.** This permission allows the user to search and view funds and budgets.
 *   **Finance: View group.** This permission allows the user to search and view groups.
@@ -58,13 +57,13 @@ Finance permissions:
 
 
 ## Keyboard shortcuts
-Keyboard shortcuts allow you to perform actions in this app using the keyboard.  See [Platform essentials > Keyboard shortcuts]({{< ref "keyboardshortcuts.md" >}}) for more information.
+Keyboard shortcuts allow you to perform actions in this app using the keyboard.  See [Platform essentials > Keyboard shortcuts](../../platform-essentials/keyboard-shortcuts/keyboardshortcuts/) for more information.
 
 
 
 ## Creating a fiscal year
 
-A fiscal year is the twelve-month period your library uses for accounting and budgetary purposes. In FOLIO, a fiscal year serves as the basis for the entire fund structure and its parts. Note: Before creating a new fiscal year, be sure to check the **Primary currency** value specified in your [Settings > Tenant > Language and localization]({{< ref "/settings_tenant.md#settings--tenant--language-and-localization" >}}). The currency on a budget is set to the Tenant currency value at the time the fiscal year record is created; therefore, if the Tenant currency value is updated, any budgets created prior to the update will still operate based on the Tenant currency that existed when the Fiscal year associated with the budget was created.
+A fiscal year is the twelve-month period your library uses for accounting and budgetary purposes. In FOLIO, a fiscal year serves as the basis for the entire fund structure and its parts. Note: Before creating a new fiscal year, be sure to check the **Primary currency** value specified in your [Settings > Tenant > Language and localization](../../settings/settings_tenant/settings_tenant/#settings--tenant--language-and-localization). The currency on a budget is set to the Tenant currency value at the time the fiscal year record is created; therefore, if the Tenant currency value is updated, any budgets created prior to the update will still operate based on the Tenant currency that existed when the Fiscal year associated with the budget was created.
 
 
 1. In the **Search & filter** pane, click **Fiscal year**.
@@ -75,15 +74,13 @@ A fiscal year is the twelve-month period your library uses for accounting and bu
 
 ### Fiscal year information
 
-
-
 *   **Name (required).** The name of the fiscal year. A suggested naming convention is the term “Fiscal Year” followed by the numeric year. For example, Fiscal Year 2021.
 *   **Code (required).** The code must be an alpha followed by a four-digit number. It can be based on name and year; for example, FY2021. The code that you establish for your fiscal year one will determine the code structure moving forward. In this example, FY2021 would be followed in succession by FY2022, FY2023, etc. Adherence to this code structure is essential to the success of fiscal year rollover. A single FOLIO tenant may have multiple fiscal years running in parallel. For example, an academic library with a July 1 - June 30 fiscal year may share a tenant with a government library operating on an October 1 - September 30 fiscal year. The academic library may configure FYA2021 with the government library configuring FYG2021 to allow rollover at different points in the calendar year.
-*   **Acquisition units.** If you only want particular users within certain acquisition units to be able to edit the fiscal year, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the fiscal year information. For more information, see [Settings > Acquisition units]({{< ref "/settings_acquisition_units.md" >}})
+*   **Acquisition units.** If you only want particular users within certain acquisition units to be able to edit the fiscal year, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the fiscal year information. For more information, see [Settings > Acquisition units](../../settings/settings_acquisition_units/settings_acquisition_units/).
 *   **Period Begin Date (UTC) (required).** The date when the fiscal year begins.
 *   **Period End Date (UTC) (required).** The date when the fiscal year ends.
 *   **Description.** A description of the fiscal year.
-Note about Currency:  The currency value does not display on the Fiscal year detail pane after creation, but the system does associate a currency with the Fiscal year based on the currency value from [Settings > Tenant > Language and localization]({{< ref "/settings_tenant.md#settings--tenant--language-and-localization" >}}). See [Viewing fund details > Fund information](#viewing-fund-details) for a description of expected system behavior for budget transaction when the Tenant currency value is changed.
+Note about Currency:  The currency value does not display on the Fiscal year detail pane after creation, but the system does associate a currency with the Fiscal year based on the currency value from [Settings > Tenant > Language and localization](../../settings/settings_tenant/settings_tenant/#settings--tenant--language-and-localization). See [Viewing fund details > Fund information](#viewing-fund-details) for a description of expected system behavior for budget transaction when the Tenant currency value is changed.
 
 
 
@@ -100,13 +97,11 @@ A ledger is a collection of funds that need to be kept fiscally separate from an
 
 ### Ledger information
 
-
-
 *   **Name (required).** Name of the ledger. For example, Law Library.
 *   **Code (required).** User-created, based on name.
 *   **Fiscal year one (required).** The first fiscal year for the ledger. Ledgers can continue to be used for multiple fiscal years. If the fiscal year does not appear in the list, you can click **New fiscal year** to create a new one.
 *   **Status (required).** Select the status of the ledger: Active, Frozen, or Inactive. Active means the ledger is ongoing, Frozen means the ledger has been put on pause, and Inactive means the ledger is no longer in use.
-*   **Acquisition Units.** If you only want particular users within certain acquisition units to be able to edit the ledger, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the ledger's information. For more information, see [Settings > Acquisition units]({{< ref "/settings_acquisition_units.md" >}}).
+*   **Acquisition Units.** If you only want particular users within certain acquisition units to be able to edit the ledger, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the ledger's information. For more information, see [Settings > Acquisition units](../../settings/settings_acquisition_units/settings_acquisition_units/).
 *   **Enforce all budget encumbrance limits.**  This box is checked by default.  Leave this box checked if you want the system to reject any encumbrances against funds related to this ledger that would exceed the available amount of the current budget.  Uncheck this box to allow encumbrance amounts on the current year budget without restrictions.
 *   **Enforce all budget expenditure limits.**  This box is checked by default.  Leave this box checked if you want the system to reject any expenditures against funds related to this ledger that would exceed the available amount of the current budget.  Uncheck this box to allow expenditure amounts on the current year budget without restrictions.
 *   **Description.** A description of the ledger.
@@ -126,12 +121,10 @@ Groups categorize funds and bring multiple funds together as a single group rega
 
 ### Group information
 
-
-
 *   **Name (required).** Name of the group. For example, History.
 *   **Code (required).** User-created, based on name.
 *   **Status (required).** Select the status of the group: Active, Frozen, or Inactive. Active means the group is ongoing, Frozen means the group has been put on pause, and Inactive means the group is no longer in use.
-*   **Acquisition units.** If you only want particular users within certain acquisition units to be able to edit the group, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the group's information. For more information, see [Settings > Acquisition units]({{< ref "/settings_acquisition_units.md" >}}).
+*   **Acquisition units.** If you only want particular users within certain acquisition units to be able to edit the group, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the group's information. For more information, see [Settings > Acquisition units](../../settings/settings_acquisition_units/settings_acquisition_units/).
 *   **Description.** A description of the group. For example, you may want to include why the group was created and the relation between the different funds.
 
 
@@ -149,22 +142,52 @@ Funds show information regarding an ongoing ledger with a budget for the current
 
 ### Fund information
 
-
-
 *   **Name (required).** Name of the fund.
 *   **Code (required).** User-created, based on name. The code must be unique. It is recommended to use alphanumeric and intuitive codes.
 *   **Ledger (required).** Select the ledger associated with the fund. A fund may only be associated with a single ledger.
 *   **Status (required).** Select the status of the fund: Active, Frozen, or Inactive. Active means the fund is ongoing, Frozen means the fund has been put on pause, and Inactive means the fund is no longer in use. Note: The fund must be active to successfully open an order or for an invoice to be fully paid.
-*   **Type.** A category to describe the fund. Fiscal year rollover of funds is often defined by fund type, so definition of the type values should consider fiscal year rollover requirements. For example, endowment, or restricted. For more information about creating fund types, see [Settings > Finance > Fund types]({{< ref "/settings_finance.md#settings--finance--fund-types" >}}). Funds that are not assigned a fund type will be grouped under **No fund type** at fiscal year rollover.
-*   **Acquisition units.** If you only want particular users within certain acquisition units to be able to edit the fund, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the fund's information. For more information, see [Settings > Acquisition units]({{< ref "/settings_acquisition_units.md" >}}). PLease note: if the assigned acquisition unit restricts view, the fund will be filtered out of the selection list that appears in **Fund distribution** accordions on purchase order lines and invoices. Users will only be able to apply funds that are "public" or with which they share an acquisition unit.
+*   **Currency.** This field is prefilled based on the currency associated with the fiscal year when the fiscal year was created. For more information, see [Creating a Fiscal Year](#creating-a-fiscal-year).
+*   **Type.** A category to describe the fund. Fiscal year rollover of funds is often defined by fund type, so definition of the type values should consider fiscal year rollover requirements. For example, endowment or restricted. For more information about creating fund types, see [Settings > Finance > Fund types](../../settings/settings_finance/settings_finance/#settings--finance--fund-types). Funds that are not assigned a fund type will be grouped under **No fund type** at fiscal year rollover.
+*   **Acquisition units.** If you only want particular users within certain acquisition units to be able to edit the fund, enter or select the Acquisition units from the drop-down list. You can select multiple units. If blank, any users with the appropriate permissions are allowed to edit the fund's information. For more information, see [Settings > Acquisition units](../../settings/settings_acquisition_units/settings_acquisition_units/). Please note: if the assigned acquisition unit restricts view, the fund will be filtered out of the selection list that appears in **Fund distribution** accordions on purchase order lines and invoices. Users will only be able to apply funds that are "public" or with which they share an acquisition unit.
 *   **Group.** To associate this fund with a group, select the group from the drop-down list.  You can assign multiple groups. See [Creating a group](#creating-a-group) for more information. 
 *   **Transfer from.** To allow transfers to this fund from any other fund, leave this field blank. To restrict transfers to this fund, enter or select the allowed funds from the drop-down list. You can select multiple funds.
 *   **Transfer to.** To allow transfers from this fund to any other fund, leave this field blank. To restrict transfers from this fund, enter or select the allowed funds from the drop-down list. You can select multiple funds.
 *   **External account (required).** The identifier for this account in an external financial system. If no integration with a financial system is desired, a library may use a hyphen (-) or other special character to satisfy the field requirement.
 *   **Description.** A description of the fund. For example, you may want to include the purpose of the fund.
+*   **Restrict use by location.** When selected, this checkbox exposes the **Locations** accordion on the fund record, allowing a user to link the fund with certain physical locations.
+
+### Locations
+
+This accordion will appear only if the **Restrict use by location** box is selected. When a fund is restricted to a specific location or locations and the fund is selected in a fund distribution on a purchase order line (POL), only the specified locations will appear in the location accordion dropdown on the POL.
+
+To add a location:
+1. Click **Add location**.
+2. Use the **Search & filter** options to locate the location(s) you wish to restrict fund usage to.
+3. Check the box(es) next to the location(s) you wish to restrict.
+4. Click **Save**.
+
+To remove a location:
+1. Click the **X** to the right of the location you wish to remove.
+
+To unassign all locations:
+1. Click **Unassign all locations**.
+Note: If you would like to unrestrict the fund, be sure to also uncheck **Restrict use by location** in the Fund information accordion.
+
+### Donor information
+
+Funds can be associated with donors who may have provided the money allocated to the fund's budget. Donor records are created within the Organizations app. For more information, see [Creating an Organization](../organizations/#creating-an-organization). When a donor is associated with a fund, and that fund is applied to a purchase order line (POL) as a fund distribution, the donor information is automatically added to the POL. It can be subsequently removed, if not required or desired.
+
+To add a donor:
+1. Click **Add donor**.
+2. Use the **Search & filter** options to locate the donor(s) you wish to associate with the fund.
+3. Check the box(es) next to the donor(s) you wish to select.
+4. Click **Save**.
+
+To remove a donor:
+1. Click the **X** to the right of the donor you wish to remove.
 
 
-#### Creating a new budget
+## Creating a new budget
 
 A budget is a finance record that describes the amount of money available for a fiscal year within a fund. You can create a current or planned budget for a fund from the fund details pane. To create a planned budget, one or more upcoming fiscal years must already be set up in the fiscal year series associated with the Ledger.  See  [Creating a fiscal year](#creating-a-fiscal-year) for more information. Previous budgets for past fiscal years will also appear on the fund details pane.
 
@@ -177,25 +200,25 @@ A budget is a finance record that describes the amount of money available for a 
 5. Click **Save**. The budget is saved.
 
 
-##### Budget information
+### Budget information
 
 *   **Fiscal year (required).** For a current budget, this value is defaulted to the current fiscal year value. For a planned budget, select a future fiscal year from the drop-down list.
 *   **Status (required).** Select the status of the budget: Active, Closed, Frozen, Inactive, Planned. Active means the budget is open, Closed means the budget is closed, Frozen means the budget has been put on pause, Inactive means the fund is no longer in use, and Planned means the budget is assigned to a future fiscal year. Note: The budget must be active to successfully open an order or for an invoice to be approved and paid.
-*   **Allowable expenditure percentage.** The percentage of the budget balance allowed for expenditures. Leave this field blank to allow unrestricted expenditures. A value of 100 restricts expenditures to the available balance. A value greater than 100 allows expenditures beyond the available balance. A value of 0 restricts expenditures to 0. 
-*   **Allowable encumbrance percentage.** The percentage of the budget balance allowed for encumbrances. Leave this field blank to allow unrestricted encumbrances. A value of 100 restricts encumbrances to the available balance. A value greater than 100 allows encumbrances beyond the available balance. A value of 0 restricts encumbrances to 0.
-*   **Allocated (required).** Enter a numeric value of money to initially allocate to the budget. Values with or without decimals are accepted (100 or 100.00). To create a budget without allocated money, enter a value of 0. Inputting a value of 0 doesn’t generate an allocation transaction. An initial allocation can be made after creating the budget. For more information, see [Allocating money to a budget](#allocating-money-to-a-budget).
+*   **Allowable expenditure percentage.** The percentage of the budget balance allowed for expenditures (including pending payments, but ignoring encumbrances). Leave this field blank to allow unrestricted expenditures. A value of 100 restricts expenditures to the available balance. A value greater than 100 allows expenditures beyond the available balance. A value of 0 restricts expenditures to 0.  
+    This is only effective if the ledger has the **Enforce all budget expenditure limits** option enabled.
+*   **Allowable encumbrance percentage.** The percentage of the budget balance allowed for encumbrances. Leave this field blank to allow unrestricted encumbrances. A value of 100 restricts encumbrances to the available balance. A value greater than 100 allows encumbrances beyond the available balance. A value of 0 restricts encumbrances to 0.  
+    This is only effective if the ledger has the **Enforce all budget encumbrance limits** option enabled.
+*   **Allocated (required).** Enter a numeric value of money to initially allocate to the budget. Values with or without decimals are accepted (100 or 100.00). To create a budget without allocated money, enter a value of 0. Inputting a value of 0 does not generate an allocation transaction. An initial allocation can be made after creating the budget. For more information, see [Allocating money to a budget](#allocating-money-to-a-budget).
 
 
 
-#### Adding expense classes to a budget
-
-
+### Adding expense classes to a budget
 
 1. [Find the fund](#searching-for-a-fiscal-year-ledger-group-or-fund) to which you want to add an expense class and select it.
 2. Click on the budget to access the **Budget details** window.
 3. In the **Budget details** window, click **Actions > Edit**.
 4. In the **Expense classes** section, click **Add expense class**.
-5. Select an expense class from the drop-down list. See [Settings > Finance > Expense classes]({{< ref "/settings_finance.md#settings--finance--expense-classes" >}}) for more information about creating expense classes.
+5. Select an expense class from the drop-down list. See [Settings > Finance > Expense classes](../../settings/settings_finance/settings_finance/#settings--finance--expense-classes) for more information about creating expense classes.
 6. Repeat steps 4 & 5 for all expense classes you wish to add.
 7. Click **Save & close**. A confirmation message appears and the expense class is saved.
 
@@ -204,7 +227,6 @@ A budget is a finance record that describes the amount of money available for a 
 ## Searching for a fiscal year, ledger, group or fund
 
 You can search for fiscal years, ledgers, groups, or funds by clicking on either **Fiscal year**, **Ledger**, **Group**, or **Fund** in the **Search & filter** pane. To search for a fiscal year, ledger, group, or fund, enter your search terms into the box when you are in the Fiscal year, Ledger, Group, or Fund pane. Select the **All** drop-down list to search through one of the following fields:
-
 
 
 *   **All.** Searches through names, codes, and descriptions. For funds, this will also search the external account field. This is the default search.
@@ -220,7 +242,6 @@ You can also search for fiscal year, ledger, group, or fund by selecting any of 
 To search for funds belonging to a certain ledger, follow these steps:
 
 
-
 1. In the **Search & filter** pane, click **Ledger**.
 2. Select the ledger from the drop-down list. The funds are listed in the results pane.
 
@@ -228,7 +249,6 @@ To search for funds belonging to a certain ledger, follow these steps:
 ### Status
 
 To filter ledgers, groups, or funds by their status, select one of the following:
-
 
 
 *   **Active.** Ledger, group, or fund currently used by your library.
@@ -241,7 +261,6 @@ To filter ledgers, groups, or funds by their status, select one of the following
 To search for funds by type, follow these steps:
 
 
-
 1. In the **Search & filter** pane, click **Type**.
 2. Select the fund type from the drop-down list. The funds are listed in the result pane.
 
@@ -249,7 +268,6 @@ To search for funds by type, follow these steps:
 ### Group
 
 To search for funds assigned to a group, follow these steps:
-
 
 
 1. In the **Search & filter** pane, click **Group**.
@@ -269,7 +287,6 @@ To search for fiscal years, ledgers, groups, or funds assigned with a specific a
 To search for funds assigned with specific tags, follow these steps:
 
 
-
 1. In the **Search & filter** pane, click **Tags**.
 2. Select the tag(s) from the drop-down list. Your results appear in the Fund pane.
 
@@ -277,7 +294,6 @@ To search for funds assigned with specific tags, follow these steps:
 ## Viewing fiscal year, ledger, group, fund, and budget details
 
 The type of information displayed in your search results depends upon the type of search performed (fiscal year, ledger, group, or fund). That information can include:
-
 
 
 *   **Name.** The name of the fiscal year, ledger, group, or fund record.
@@ -313,7 +329,7 @@ The Fiscal year information section contains the following fields:
 *   **Description.** Description of the fiscal year.
 
 
-#### Financial Summary
+##### Financial Summary
 
 This section displays a table containing summary financial information for all fund budgets associated with the fiscal year.
 
@@ -328,8 +344,9 @@ This section displays a table containing summary financial information for all f
 *   **Awaiting Payment.** The sum of all pending payment transaction amounts against all fund budgets for the fiscal year.  
 *   **Expended.** The sum of all payment transaction amounts minus credit transaction amounts, against all fund budgets for the fiscal year.
 *   **Unavailable.** The total amount unavailable across all fund budgets for the fiscal year, calculated as the sum of the encumbered, awaiting payment, and expended amounts.
-*   **Over encumbrance.** The total amount encumbered minus the total funding amount for all fund budgets for the fiscal year.
-*   **Over expended.** The total amount expended minus the total funding amount for all fund budgets for the fiscal year.
+*   **Over encumbrance.** The encumbrance going beyond what is available in the fund budgets for the fiscal year (not taking allowable encumbrance into account). In Quesnelia the calculation is wrong in several cases (see [MODFISTO-484](https://folio-org.atlassian.net/browse/MODFISTO-484) for details). It should be  
+    `Unavailable - Total funding - Over expended`.
+*   **Over expended.** The total amount expended and awaiting payment minus the total funding amount for all fund budgets for the fiscal year (or zero if that value is negative).
 *   **Available balance.** Total amount available across all fund budgets for the fiscal year, calculated as **Total funding** amount minus the **Unavailable** amount.  
 
 #### Ledger
@@ -370,7 +387,6 @@ The ledger details pane contains ledger financial summary information and all gr
 The Ledger information section contains the following fields:
 
 
-
 *   **Record last updated.** Date and time when the record was last updated. Click **Record last updated** to see the next three fields.
 *   **Source.** Name of the user who last updated the record.
 *   **Record created.** Date and time when the record was created.
@@ -386,9 +402,7 @@ The Ledger information section contains the following fields:
 
 
 
-**Financial Summary**
-
-
+##### Financial Summary
 
 **Funding Information**
 *   **Initial allocation.** The amount of the first allocation made to a budget, summarized for all fund budgets for the ledger.
@@ -405,8 +419,9 @@ The Ledger information section contains the following fields:
 *   **Awaiting Payment.** The sum of all pending payment transaction amounts against all fund budgets for the ledger during the current fiscal year.  
 *   **Expended.** The sum of all payment transaction amounts minus credit transaction amounts against all fund budgets for the ledger during the current fiscal year.
 *   **Unavailable.** The total amount unavailable across all fund budgets for the ledger during the current fiscal year, calculated as the sum of the encumbered, awaiting payment, and expended amounts.
-*   **Over encumbrance.** The total amount encumbered minus the total funding amount for all fund budgets for the ledger during the current fiscal year.
-*   **Over expended.**  The total amount expended minus the total funding amount for all fund budgets for the ledger during the current fiscal year.
+*   **Over encumbrance.** The encumbrance going beyond what is available in the fund budgets for the ledger during the current fiscal year (not taking allowable encumbrance into account). In Quesnelia the calculation is wrong in several cases (see [MODFISTO-484](https://folio-org.atlassian.net/browse/MODFISTO-484) for details). It should be  
+    `Unavailable - Total funding - Over expended`.
+*   **Over expended.**  The total amount expended and awaiting payment minus the total funding amount for all fund budgets for the ledger during the current fiscal year (or zero if that value is negative).
 *   **Available balance.** Total amount available across all fund budgets for the ledger during the current fiscal year, calculated as **Total funding** amount minus the **Unavailable** amount.  
 
 
@@ -488,7 +503,6 @@ Click **Export**.  The file downloads to your local download location and contai
 
 
 
-
 ### Viewing group details
 
 The group details pane contains group financial summary information and lists all funds and expense classes associated with the group. 
@@ -499,19 +513,18 @@ The group details pane contains group financial summary information and lists al
 
 #### Group information
 
-
 *   **Record last updated.** Date and time when the record was last updated. Click **Record last updated** to see the next three fields.
 *   **Source.** Name of the user who last updated the record.
 *   **Record created.** Date and time when the record was created.
 *   **Source.** Name of the user who created the record.
 *   **Name.** Name of the group.
 *   **Code.** Code for the group.
-*   **Fiscal year.** Name of the twelve-month period your library uses to manage its finances. The current fiscal year displays as the default. Use the drop down list to select a different fiscal year.  The financial summary information displays for the fiscal year selected.
+*   **Fiscal year.** Name of the twelve-month period your library uses to manage its finances. The current fiscal year displays as the default. Use the drop-down list to select a different fiscal year.  The financial summary information displays for the fiscal year selected.
 *   **Status.** Status of the group: Active, Inactive, Frozen.
 *   **Acquisition units.** All acquisition units assigned to the group.
 *   **Description.** Description of the group.
 
-**Financial Summary**
+##### Financial Summary
 
 **Funding Information**
 *   **Initial allocation.** The amount of the first allocation made to a budget, summarized for all fund budgets for the group.
@@ -528,8 +541,9 @@ The group details pane contains group financial summary information and lists al
 *   **Awaiting Payment.** The sum of pending payment transaction amounts against all fund budgets for the group during the fiscal year selected.  
 *   **Expended.** The sum of payment transaction amounts minus credit transaction amounts against all fund budgets for the group during the fiscal year selected.
 *   **Unavailable** Total amount unavailable across all fund budgets for the group during the fiscal year selected, calculated as the sum of the encumbered, awaiting payment, and expended amounts.
-*   **Over encumbrance.** The total amount encumbered minus the total funding amount for all fund budgets for the group during the current fiscal year.
-*   **Over expended.**  The total amount expended minus the total funding amount for all fund budgets for the group during the current fiscal year.
+*   **Over encumbrance.** The encumbrance going beyond what is available in the fund budgets for the group during the fiscal year (not taking allowable encumbrance into account). In Quesnelia the calculation is wrong in several cases (see [MODFISTO-484](https://folio-org.atlassian.net/browse/MODFISTO-484) for details). It should be  
+    `Unavailable - Total funding - Over expended`.
+*   **Over expended.**  The total amount expended and awaiting payment minus the total funding amount for all fund budgets for the group during the current fiscal year (or zero if that value is negative).
 *   **Available balance.** Total amount available across all fund budgets for the group during the fiscal year selected, calculated as **Total funding** amount minus the **Unavailable** amount.  
 
 
@@ -562,11 +576,11 @@ This section lists all expense classes associated with funds assigned to the gro
 *   **Encumbered.**  Total amount encumbered for the expense class.
 *   **Awaiting payment.**  Total amount awaiting payment for the expense class.
 *   **Expended.** Total amount expended for the expense class.
-*   **Percent of total expended.** Total amount expended for the expense class as a percentage of total expended from across all expense classes for funds in the group.
+*   **Percent of total expended.** Total amount expended for the expense class as a percentage of total expended from across all expense classes for funds in the group. In Quesnelia the calculation is wrong when the budget is over expended (see [MODFIN-372](https://folio-org.atlassian.net/browse/MODFIN-372) for details).
 
 ### Viewing fund details
 
-The fund details pane contains fund information and all current, planned, and previous budgets as well as expense classes associated with a fund. The budget sections in the pane display total allocated, net transfers, unavailable, and available for the budget. The expense class detail is further broken down by encumbered, awaiting payment, expnded, and percent of total expended. To view a list of transactions for the current budget of a fund, click **Actions > View transactions for current budget**. See [Viewing budget transactions](#viewing-transactions-for-a-current-budget) for more information.
+The fund details pane contains fund information and all current, planned, and previous budgets as well as expense classes associated with a fund. The budget sections in the pane display total allocated, net transfers, unavailable, and available for the budget. The expense class detail is further broken down by encumbered, awaiting payment, expended, and percent of total expended. To view a list of transactions for the current budget of a fund, click **Actions > View transactions for current budget**. See [Viewing budget transactions](#viewing-transactions-for-a-current-budget) for more information.
 
 
 
@@ -575,9 +589,7 @@ The fund details pane contains fund information and all current, planned, and pr
 
 #### Fund information
 
-The Fund information section contains details about the fund.  For descriptions of each field in this section, see  [Fund information](#fund-information).  In addition to the fields that are available during fund creation, the fund detail pane displays the fund **Currency**. The fund currency value is set to the currency value from [Settings > Tenant > Language and localization]({{< ref "/settings_tenant.md#settings--tenant--language-and-localization" >}}). Note that when an order is opened, the system creates an encumbrance transaction on the current budget for the fund selected in the fund distribution section of the order.  If the currency of the PO line is different than the budget currency, the encumbrance will display on the budget as a converted amount.  The budget currency is set to the Tenant currency value at the time the [Finance > Fiscal year](#fiscal-year-information) record is created; therefore, if the Tenant currency value is updated, any budgets created prior to the update will still operate based on the Tenant currency that existed when the Fiscal year associated with the budget was created.
-
-
+The Fund information section contains details about the fund.  For descriptions of each field in this section, see  [Fund information](#fund-information).  In addition to the fields that are available during fund creation, the fund detail pane displays the fund **Currency**. The fund currency value is set to the currency value from [Settings > Tenant > Language and localization](../../settings/settings_tenant/settings_tenant/#settings--tenant--language-and-localization). Note that when an order is opened, the system creates an encumbrance transaction on the current budget for the fund selected in the fund distribution section of the order.  If the currency of the PO line is different than the budget currency, the encumbrance will display on the budget as a converted amount.  The budget currency is set to the Tenant currency value at the time the [Finance > Fiscal year](#fiscal-year-information) record is created; therefore, if the Tenant currency value is updated, any budgets created prior to the update will still operate based on the Tenant currency that existed when the Fiscal year associated with the budget was created.
 
 
 
@@ -677,10 +689,10 @@ Use the **Actions** menu to allocate money to a budget.  You can **Increase allo
 2. In the **Budget details** window, click **Actions > Increase allocation.**
 3. In the **Increase allocation** dialog, enter the following information:
 
-*   **Fund.**  The name of the fund to which you want to increase an allocation of money. This field displays the fund name and code for the budget you selected and is not editable. The display format is Fund name (fund code).
-*   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). The amount must be a positive number.
-*   **Tags.** Enter or select any tags from the drop-down list to apply to the allocation transaction.
-*   **Description.** Enter a description of the allocation increase.
+    *   **Fund.**  The name of the fund to which you want to increase an allocation of money. This field displays the fund name and code for the budget you selected and is not editable. The display format is Fund name (fund code).
+    *   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). The amount must be a positive number.
+    *   **Tags.** Enter or select any tags from the drop-down list to apply to the allocation transaction.
+    *   **Description.** Enter a description of the allocation increase.
 
 4. Click **Confirm.** A confirmation message appears and the increase allocation transaction is complete.
 
@@ -688,21 +700,19 @@ Use the **Actions** menu to allocate money to a budget.  You can **Increase allo
 
 ### Decreasing allocation to a fund budget
 
-
 1. [Find the budget](#viewing-budget-details) to which you want to submit a decreased allocation and select it.
 2. In the **Budget details** window, click **Actions > Decrease allocation.**
 3. In the **Decrease allocation** dialog, enter the following information:
 
-*   **Fund.**  The name of the fund to which you want to submit a decreased allocation of money. This field displays the fund name and code for the budget you selected and is not editable. The display format is Fund name (fund code).
-*   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). The amount must be a positive number. 
-*   **Tags.** Enter or select any tags from the drop-down list to apply to the decrease allocation transaction.
-*   **Description.** Enter a description of the allocation decrease.
+    *   **Fund.**  The name of the fund to which you want to submit a decreased allocation of money. This field displays the fund name and code for the budget you selected and is not editable. The display format is Fund name (fund code).
+    *   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). The amount must be a positive number. 
+    *   **Tags.** Enter or select any tags from the drop-down list to apply to the decrease allocation transaction.
+    *   **Description.** Enter a description of the allocation decrease.
 
 4. Click **Confirm.** A confirmation message appears and the decrease allocation transaction is complete.
 
 
 ### Moving allocation to another fund budget
-
 
 Use the **Move allocation** action to move money between current fiscal year budgets as allocation transactions. Allocated amounts can be included in the next fiscal year allocation amount for a fund, depending on your fiscal year rollover settings . See [Transferring money between funds](#transferring-money-between-funds) for information about transfers to determine whether you want to move money using **Move allocation** or **Transfer**.
 
@@ -710,11 +720,11 @@ Use the **Move allocation** action to move money between current fiscal year bud
 2. In the **Budget details** window, click **Actions > Move allocation.**
 3. In the **Move allocation** dialog, enter the following information:
 
-*   **From (required).** Select the fund from which you want to allocate money. The display format is Fund name (fund code).
-*   **To (required).** Select the name of the fund to which you want to allocate money. This field displays the fund name (code) with which this budget is associated. You must populate either **From** or **To** with the fund for the budget you are currently viewing.
-*   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). The amount must be a positive number. 
-*   **Tags.** Enter or select any tags from the drop-down list to apply to the decrease allocation transaction.
-*   **Description.** Enter a description of the allocation move.
+    *   **From (required).** Select the fund from which you want to allocate money. The display format is Fund name (fund code).
+    *   **To (required).** Select the name of the fund to which you want to allocate money. This field displays the fund name (code) with which this budget is associated. You must populate either **From** or **To** with the fund for the budget you are currently viewing.
+    *   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). The amount must be a positive number. 
+    *   **Tags.** Enter or select any tags from the drop-down list to apply to the decrease allocation transaction.
+    *   **Description.** Enter a description of the allocation move.
 
 4. Click **Confirm.** A confirmation message appears and the decrease allocation transaction is complete.
 
@@ -725,8 +735,7 @@ Use the **Move allocation** action to move money between current fiscal year bud
 ## Transferring money between funds
 
 
-
-You can transfer money between the current fiscal year budgets of two funds. This action is only allowed if both the **From** and **To** funds have current fiscal year budgets. Transfers are a one-time movement of money within a fiscal year. Fiscal year rollover will not consider transfer amounts in the initial allocation amounts for new budgets.  
+You can transfer money between the current fiscal year budgets of two funds. This action is only allowed if both the **From** and **To** funds have current fiscal year budgets. Transfers are a one-time movement of money within a fiscal year. Unlike with moving allocations, fiscal year rollover will not consider transfer amounts in the initial allocation amounts for new budgets created as a result of fiscal year rollover.  
 
 
 
@@ -734,14 +743,23 @@ You can transfer money between the current fiscal year budgets of two funds. Thi
 2. In the **budget details** window, click **Actions > Transfer.**
 3. In the **Transfer** dialog, enter the following information:
 
-*   **From (required).** Select the fund from which you want to transfer money.  
-*   **To (required).** Select the fund to which you want to transfer money. This field displays the fund name (code) with which this budget is associated. You must populate either **From** or **To** with the fund for the budget you are currently viewing.
-*   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). Negative values are accepted.  
-*   **Tags.** Enter or select any tags from the drop-down list you would like to apply to the transfer transaction.
-*   **Description.** Enter a description of the transfer.  
+    *   **From (required).** Select the fund from which you want to transfer money.  
+    *   **To (required).** Select the fund to which you want to transfer money. This field displays the fund name (code) with which this budget is associated. You must populate either **From** or **To** with the fund for the budget you are currently viewing.
+    *   **Amount (required).** Enter an amount as a numeric value. Values with or without decimals are accepted (100 or 100.00). Negative values are accepted.  
+    *   **Tags.** Enter or select any tags from the drop-down list you would like to apply to the transfer transaction.
+    *   **Description.** Enter a description of the transfer.  
 
 4. Click **Confirm.** A confirmation message appears and the transfer transaction is complete.
 
+
+
+## Recalculating budget totals
+
+There are cases when, after deleting financial transactions like pending payments, credits, payments, and encumbrances, a library may need to recalculate the totals on the impacted budget. Budget totals are recalculated entirely based on transactions.
+
+1. [Find the budget](#viewing-budget-details) you want to recalculate and select it.
+2. In the **Budget details** window, click **Actions > Recalculate budget totals.**
+3. A confirmation message appears that says **Budget totals have been updated based on current budget transactions**. 
 
 
 ## Deleting a budget
@@ -754,7 +772,9 @@ Note: Financial structure records cannot be deleted if they have other records a
 2. In the **Budget details** window, click **Actions > Delete.**
 3. Click **Delete** in the confirmation window. A confirmation message appears and the budget is deleted.
 
+
 ## Viewing transactions for a current budget
+
 There are two methods to view a list of all transactions for a budget:
 
 1. From a fund: [Find the fund](#searching-for-a-fiscal-year-ledger-group-or-fund) for which you want to view transactions and select it to open the fund details pane.  Click **Actions > View transactions for current budget.**
@@ -762,7 +782,6 @@ There are two methods to view a list of all transactions for a budget:
 
 
 ### Searching for budget transactions
-
 
 To search budget transactions, follow these steps:
 
@@ -774,7 +793,6 @@ To search budget transactions, follow these steps:
 #### Type
 
 To filter transactions by Type, select one or more of the following:
-
 
 
 *   **Allocation.** Filter transactions by type of Allocation. This includes initial allocations, as well as increases, decreases, and movements of allocations to the budget.
@@ -789,7 +807,6 @@ To filter transactions by Type, select one or more of the following:
 #### Source
 
 To filter transactions by Source, select one of the following:
-
 
 
 *   **Fiscal year.** Transactions generated during the fiscal year rollover process. For example, automated allocations during fiscal year rollover, as defined in [Rollover fiscal year](#rollover-fiscal-year) settings.
@@ -825,7 +842,6 @@ To filter transactions by the Source invoice number, follow these steps:
 To filter for transactions assigned with specific tags, follow these steps:
 
 
-
 1. In the **Search & filter** pane, click **Tags.**
 2. Select the tag(s) from the drop-down list. Your results appear in the Transactions pane.
 
@@ -833,7 +849,6 @@ To filter for transactions assigned with specific tags, follow these steps:
 #### Expense class
 
 To filter transactions by expense class, follow these steps:
-
 
 
 1. In the **Search & filter** pane, click **Expense class.**
@@ -858,7 +873,6 @@ To view additional information about a transaction, click the transaction row in
 
 ### Viewing allocation transactions
 
-
 *   **Record last updated.** Date and time when the record was last updated. Click **Record last updated** to see the next three fields.
 *   **Source.** Name of the user who last updated the record.
 *   **Record created.** Date and time when the record was created.
@@ -878,7 +892,6 @@ To view additional information about a transaction, click the transaction row in
 
 ### Viewing credit transactions
 
-
 The credit transaction detail pane contains many of the same fields as the [allocation detail pane](#viewing-allocation-transactions).  Some fields are populated differently for credit transactions:
 
 *   **Source.** Invoice number or identifier that generated this credit transaction.  Click on the invoice identifier to open the Invoices app invoice detail pane for that invoice.
@@ -889,7 +902,6 @@ The credit transaction detail pane contains many of the same fields as the [allo
 
 
 ### Viewing encumbrance transactions
-
 
 When an order containing a PO Line with a fund distribution is opened, an **Encumbrance** transaction against the current fiscal year budget for the fund is created. The encumbrance transaction detail pane contains many of the same fields as the [allocation detail pane](#viewing-allocation-transactions).  Some fields are populated differently for encumbrance transactions:
 
@@ -908,7 +920,6 @@ When an order containing a PO Line with a fund distribution is opened, an **Encu
 
 #### Releasing encumbrances manually
 
-
 If you need to unencumber an order, this action is available from the transaction detail on the encumbered budget. This may be needed to manage charges related to ongoing orders. To release an encumbrance the user must have the **Finance: Manually release encumbrance** [permission](#permissions) assigned. 
 
 To release an encumbrance, follow these steps:
@@ -916,11 +927,23 @@ To release an encumbrance, follow these steps:
 1. Find the transaction list for the encumbered budget.  See [Viewing transactions for a current budget](#viewing-transactions-for-a-current-budget) for more information.
 2. Select the encumbrance transaction from the result list. 
 3. On the encumbrance detail pane, click **Release encumbrance.**
-4. In the confirmation window, click **Confirm** for the message “Are you sure you want to release this encumbrance?” Any remaining amount will be added back to the budget.
+4. In the confirmation window, click **Confirm** for the message “Are you sure you want to release this encumbrance? Any remaining amount will be added back to the budget."
 5. The encumbrance is released.  The amount is restored to the budget and the status value on the encumbrance detail pane changes from **Unreleased** to **Released.**
 
-### Viewing payment transactions
 
+#### Unreleasing encumbrances manually
+
+There are situations where encumbrances may erroneously end up with a status of released. In these circumstances users should be able to unrelease encumbrances manually. To unrelease an encumbrance, the user must have the **Finance: Unrelease encumbrance** [permission](#permissions) assigned. 
+
+To unrelease an encumbrance, follow these steps:
+
+1. Find the transaction list for the budget you wish to re-encumber.  See [Viewing transactions for a current budget](#viewing-transactions-for-a-current-budget) for more information.
+2. Select the encumbrance transaction from the result list. 
+3. On the encumbrance detail pane, click **Unrelease encumbrance.**
+4. In the confirmation window, click **Confirm** for the message “Are you sure you want to unrelease this encumbrance? Any remaining amount will be encumbered against the budget."
+5. The encumbrance is unreleased.  The amount is re-encumbered on the budget and the status value on the encumbrance detail pane changes from **Released** to **Unreleased.**
+
+### Viewing payment transactions
 
 When an invoice is paid, the existing **Pending payment** transaction record type value is updated from type [Pending payment](#viewing-pending-payment-transactions) to type **Payment.** The payment transaction detail pane contains many of the same fields as the [allocation detail pane](#viewing-allocation-transactions).  Some fields are populated differently for payment transactions:
 
@@ -934,21 +957,16 @@ When an invoice is paid, the existing **Pending payment** transaction record typ
 
 ### Viewing pending payment transactions
 
-
-
 When an invoice is approved, a **Pending payment** type transaction record is created for the fund’s current fiscal year budget. The original encumbrance transaction record for a related PO Line will persist on the transaction list for the budget.  The amount value of the encumbrance transaction is updated when an invoice is approved since approval of the invoice releases the pending payment amount of the encumbrance.  Once an invoice is paid, the transaction’s type value is changed from **Pending payment** to **Payment.** The pending payment transaction detail pane the same fields as the [payment transaction detail pane](#viewing-payment-transactions).  
 
 
 ### Viewing rollover transfer transactions
-
-
 
 The fiscal year rollover process creates transfer transactions if the [rollover settings](#fiscal-year-rollover-information) are defined to create transfers to new fiscal year budgets.  
 
 
 
 ### Viewing transfer transactions
-
 
 When a [transfer of money](#transferring-money-between-funds) is made between two funds, a **Transfer** transaction is created. The transfer transaction detail pane contains many of the same fields as the [allocation detail pane](#viewing-allocation-transactions).  Some fields are populated differently for transfer transactions:
 
@@ -962,7 +980,6 @@ When a [transfer of money](#transferring-money-between-funds) is made between tw
 
 
 ## Editing a fiscal year, ledger, group, fund, or budget records
-
 
 
 1. In the **Search & filter** pane, click the appropriate option: **Fiscal year**, **Ledger**, **Group**, or **Fund**.
@@ -1003,13 +1020,13 @@ To run a test of fiscal year rollover, follow these steps:
 5. In the Rollover window, complete the form to indicate your preferences for rollover settings.  For more information on the fields on the rollover screen, see the descriptions below.
 6. Click the **Test rollover** button to initiate a test of fiscal year rollover for this ledger.
 7. If any unpaid invoices exist, a dialog window displays, “FOLIO has found invoices that are not yet paid or canceled. If you are sure you want to continue with rollover click continue.”  A table list of invoices displays the following information:
-*   **Vendor invoice number.**
-*   **Vendor.**  
-*   **Invoice date.** 
-*   **Status.**
-*   **Total amount (system)**
+    *   **Vendor invoice number.**
+    *   **Vendor.**  
+    *   **Invoice date.** 
+    *   **Status.**
+    *   **Total amount (system)**
 8. Click **Cancel** to exit the dialog list without proceeding with the rollover test, click **Export list** to download a .csv file list unpaid invoices, or click **Continue** to proceed with the rollover test.
-9  After continuing, a dialog displays “Please confirm that you have completed the necessary details and are ready to proceed with your rollover TEST. This process may take several minutes to complete. A link to the results will be sent to [user email address] when the process is complete.” 
+9.  After continuing, a dialog displays “Please confirm that you have completed the necessary details and are ready to proceed with your rollover TEST. This process may take several minutes to complete. A link to the results will be sent to [user email address] when the process is complete.” 
 10. Click **Confirm.**  A green toast message indicates that the rollover test started successfully and focus returns to the three pane layout for the ledger.  A confirmation email is sent to the user’s email address.
 11. To [view the test rollover results](#viewing-rollover-log-results) in the log, open the Actions menu and select **Rollover logs.** 
 
@@ -1024,13 +1041,13 @@ To run fiscal year rollover, follow these steps:
 5. In the Rollover window, complete the form to indicate your preferences for rollover settings.  For more information on the fields on the rollover screen, see the descriptions below.
 6. Click the **Rollover** button to initiate a test of fiscal year rollover for this ledger.
 7. If any unpaid invoices exist, a dialog window displays, “FOLIO has found invoices that are not yet paid or canceled. If you are sure you want to continue with rollover click continue.”  A table list of invoices displays the following information:
-*   **Vendor invoice number.**
-*   **Vendor.**  
-*   **Invoice date.** 
-*   **Status.**
-*   **Total amount (system)**
+    *   **Vendor invoice number.**
+    *   **Vendor.**  
+    *   **Invoice date.** 
+    *   **Status.**
+    *   **Total amount (system)**
 8. Click **Cancel** to exit the dialog list without proceeding with the rollover test, click **Export list** to download a .csv file list unpaid invoices, or click **Continue** to proceed with the rollover.
-9  After continuing, a dialog displays “Please confirm that you have completed the necessary details and are ready to proceed with your rollover. This process may take several minutes to complete. A link to the results will be sent to [user email address] when the process is complete.” 
+9.  After continuing, a dialog displays “Please confirm that you have completed the necessary details and are ready to proceed with your rollover. This process may take several minutes to complete. A link to the results will be sent to [user email address] when the process is complete.” 
 10. Click **Confirm.**  A green toast message indicates that the rollover started successfully and focus returns to the three pane layout for the ledger.  A confirmation email is sent to the user’s email address.
 11. To [view the rollover results](#viewing-rollover-log-results) in the log, open the Actions menu and select **Rollover logs.** 
 
@@ -1045,14 +1062,14 @@ If your institution runs rollover before or after the fiscal year end date, you�
 *   **Period begin date.**  The fiscal year begin date for the **Fiscal year** selected.   See [Creating a fiscal year](#creating-a-fiscal-year) for more information about period dates.
 *   **Period end date.** The Fiscal Year end date for the Fiscal year selected.  Note: The **Period end date** must be greater than the current date to initiate rollover from the current year to an upcoming year. 
 *   **Fiscal year.**  Select the next fiscal year.  If the next fiscal year has not yet been set up, click **New fiscal year** to create one.  See  [Creating a fiscal year](#creating-a-fiscal-year) for more information.
-*   **Enforce all budget encumbrance limits.** This box is checked by default. Leave this box checked if you want the system to reject any encumbrances that would exceed the available amount. For example, if your institution typically doesn’t rollover allocations and adds initial allocation amounts manually after rollover, you might want to uncheck this box to allow current year encumbrances to be applied to the upcoming year budgets that are awaiting initial allocations.  
+*   **Enforce all budget encumbrance limits.** This box is checked by default. Leave this box checked if you want the system to reject any encumbrances that would exceed the available amount. For example, if your institution typically does not roll over allocations and adds initial allocation amounts manually after rollover, you might want to uncheck this box to allow current year encumbrances to be applied to the upcoming year budgets that are awaiting initial allocations.  
 *   **Enforce all budget expenditure limits.** This box is checked by default. Uncheck this box to allow expenditures to rollover even if the new budget has insufficient funds allocated.  
 *   **Close all current budgets.**  This checkbox is selected by default and indicates that you want to close all the current fiscal year budgets as part of this rollover. Uncheck this box if you wish to leave the budget active if you must pay future invoices against past fiscal years.
 
 
 #### Rollover budgets 
 
-The information in this section defines rollover behavior for budgets by fund type.  For more information about creating fund types, see [Settings > Finance > Fund types]({{< ref "/settings_finance.md#settings--finance--fund-types" >}}).  For each fund type listed, select the appropriate settings for each of the fields defined below.  These settings will be applied to all upcoming fiscal year budgets of that fund type. If a fund does not have a fund type assigned, it will be listed under **No fund type**.
+The information in this section defines rollover behavior for budgets by fund type.  For more information about creating fund types, see [Settings > Finance > Fund types](../../settings/settings_finance/settings_finance/#settings--finance--fund-types).  For each fund type listed, select the appropriate settings for each of the fields defined below.  These settings will be applied to all upcoming fiscal year budgets of that fund type. If a fund does not have a fund type assigned, it will be listed under **No fund type**.
 
 
 *   **Rollover allocation.**  Check this box if you want the upcoming fiscal year budget initial allocation amount to equal the current fiscal year budget total allocation amount.
@@ -1060,8 +1077,8 @@ The information in this section defines rollover behavior for budgets by fund ty
 *   **Rollover budget value.**  Select which value from the current fiscal year budget to roll over to the new fiscal year budget, if your library allows the rollover of surplus funds: Select **None** to ignore the current fiscal year budget values, **Available** to use the available amount, and **Cash balance** to use the remaining cash balance which is the total funding amount minus the total expended amount.  See [Viewing budget details](#viewing-budget-details) for a full description of the Available and Cash balance values.
 *   **Rollover value as.**  Indicates whether any available amounts that are rolled over should be categorized as a **Transfer** or an **Allocation.**
 *   **Set allowances.** Check this box to activate the  **Allowed encumbrance, %.** and **Allowed expenditure, %.** fields. 
-*   **Allowed encumbrance, %.**  The percentage amount to be applied to the upcoming fiscal year's budget allocated amount to calculate allowed encumbrances against funds of this fund type.  To allow all encumbrances with no limit, leave this field blank.  For example, if the budget’s total allocated amount is $1000 and you set an **Allowed encumbrance, %** of 110 percent, the system will allow payment of invoices up to $1100.  Similarly, a value of 90 percent will limit expenditures to $900.   Note: You can only enter a value in this field if the **Set allowances** checkbox is checked.
-*   **Allowed expenditure, %.**  The percentage amount to be applied to the upcoming budget’s allocated amount to calculate allowed expenditures against funds of this fund type.  To allow all expenditures with no limit, leave this field blank.  For example, if the budget’s total allocated amount is $1000 and you set an **Allowed expenditure, %** of 110 percent, the system will allow payment of invoices up to $1100.  Similarly, a value of 90 percent will limit expenditures to $900.   Note: You can only enter a value in this field if the **Set allowances** checkbox is checked.
+*   **Allowed encumbrance, %.**  The percentage amount to be applied to the upcoming fiscal year's budget allocated amount to calculate allowed encumbrances against funds of this fund type.  To allow all encumbrances with no limit, leave this field blank.  For example, if the budget’s total funding is $1000 and you set an **Allowed encumbrance, %** of 110 percent, the system will allow opening orders up to $1100. Similarly, a value of 90 percent will limit encumbrances to $900. Note: You can only enter a value in this field if the **Set allowances** checkbox is checked.
+*   **Allowed expenditure, %.**  The percentage amount to be applied to the upcoming budget’s allocated amount to calculate allowed expenditures against funds of this fund type.  To allow all expenditures with no limit, leave this field blank. For example, if the budget’s total funding is $1000 and you set an **Allowed expenditure, %** of 110 percent, the system will allow approval of invoices up to $1100.  Similarly, a value of 90 percent will limit expenditures to $900. Note: You can only enter a value in this field if the **Set allowances** checkbox is checked.
 
 
 
@@ -1069,8 +1086,8 @@ The information in this section defines rollover behavior for budgets by fund ty
 
 The information in this section defines rollover behavior for encumbrances by order type: one-time, ongoing, or ongoing-subscription.  An order is considered an ongoing-subscription if the order type is **Ongoing** and the **Subscription** checkbox is checked. See [Orders > Creating an ongoing order > Ongoing order information](../orders/#ongoing-order-information) for more information about the subscription checkbox.  An open order must have the **Re-encumber** checkbox activated to be eligible for fiscal year rollover. For each order type listed, select the appropriate settings for each of the fields defined below:
 
-*   **Rollover.**  Check this box if you want encumbrances for open orders of this type of order to rollover to the upcoming fiscal year budget associated with each order.  Checking this box will activate the  **Based on** and **Increase by, %** fields.
-*   **Based on.**  From the drop down list, select **Expended** to encumber the total amount that was expended during the current fiscal year. Select **Initial encumbrance** to encumber the purchase order line estimated price. Select **Remaining** to encumber the amount that has not yet been paid.
+*   **Rollover.**  Check this box if you want encumbrances for open orders of this type of order to roll over to the upcoming fiscal year budget associated with each order.  Checking this box will activate the  **Based on** and **Increase by, %** fields.
+*   **Based on.**  From the drop-down list, select **Expended** to encumber the total amount that was expended during the current fiscal year. Select **Initial encumbrance** to encumber the purchase order line estimated price. Select **Remaining** to encumber the amount that has not yet been paid.
 *   **Increase by, %.**  Enter a value if you want to increase the encumbrance amount by a defined percentage.   
 
 

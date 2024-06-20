@@ -70,7 +70,7 @@ Before you implement Circulation rules, you need to configure these settings in 
 Before you begin to write your circulation rules, you should:
 
 * Read the [FOLIO GitHub Circulation rules documentation](https://github.com/folio-org/mod-circulation/blob/master/doc/circulationrules.md).
-* Determine if you want to use automated item blocks. If so, follow the [Automated Item Block guidelines](https://wiki.folio.org/display/FOLIOtips/Implementing+Automated+Item+Blocks).
+* Determine if you want to use automated item blocks. If so, follow the [Automated Item Block guidelines](https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/5670275/Implementing+Automated+Item+Blocks).
 
 
 ### Creating circulation rules
@@ -282,7 +282,12 @@ If you select **Fixed**, you see the following fields:
 
 **Grace period.** Enter a grace period for overdue items. If you choose to have a grace period, items will not count against the [Maximum number of overdue items](../../settings_users/settings_users/#settings--users--conditions) patron block and there will be no overdue fine until after the loan due date/time plus the grace period interval. If the grace period expires and the item has not been returned, the grace period will count towards calculating an overdue or lost item fee/fine. Adding a grace period to a due date follows the same logic that you chose for closed library due date management, if the grace period lands in a closed time for the service point.
 
-**Item limit.** Enter the maximum number of items that can be borrowed by one patron under this policy. Leave blank to have no item limit.
+**Item limit.** Enter the maximum number of items matching the loan type and material type criteria of the circulation rule that can be borrowed by one patron under this policy. Leave blank to have no item limit.
+
+The item limit will only apply when the circulation rule criteria includes either [loan type](../../settings_inventory/settings_inventory/#settings--inventory--loan-types), [material type](../../settings_inventory/settings_inventory/#settings--inventory--material-types), or both. If the circulation rule includes neither loan type nor material type, then the item limit in the loan policy will not be applied. See [CIRC-558](https://folio-org.atlassian.net/issues/CIRC-558) and [Automated Item Block guidelines]( https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/5670275/Implementing+Automated+Item+Blocks) for more information.
+
+To limit the number of items that users in a patron group can borrow, see [Settings > Users > Limits](../../settings_users/settings_users/#settings--users--limits).
+
 
 If you select **Rolling**, you see the following fields:
 
@@ -298,7 +303,12 @@ If you select **Rolling**, you see the following fields:
 
 **Grace period.** Enter a grace period for overdue items. If you choose to have a grace period, items will not count against the [Maximum number of overdue items](../../settings_users/settings_users/#settings--users--conditions) patron block and there will be no overdue fine until after the loan due date/time plus the grace period interval.  If the grace period expires and the item has not been returned, the grace period will count towards calculating an overdue or lost item fee/fine. Adding a grace period to a due date follows the same logic that you chose for closed library due date management if the grace period lands in a closed time for the service point.
 
-**Item limit.** Enter the maximum number of items that can be borrowed by one patron under this policy. Leave blank to have no item limit.
+**Item limit.** Enter the maximum number of items matching the loan type and material type criteria of the circulation rule that can be borrowed by one patron under this policy. Leave blank to have no item limit.
+
+The item limit will only apply when the circulation rule criteria includes either [loan type](../../settings_inventory/settings_inventory/#settings--inventory--loan-types), [material type](../../settings_inventory/settings_inventory/#settings--inventory--material-types), or both. If the circulation rule includes neither loan type nor material type, then the item limit in the loan policy will not be applied. See [CIRC-558](https://folio-org.atlassian.net/issues/CIRC-558) and [Automated Item Block guidelines]( https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/5670275/Implementing+Automated+Item+Blocks) for more information.
+
+To limit the number of items that users in a patron group can borrow, see [Settings > Users > Limits](../../settings_users/settings_users/#settings--users--limits).
+
 
 #### Renewals
 
@@ -395,7 +405,7 @@ Click **Add reminder fee** to set up a reminder fee schedule:
 
 1. Enter a number in **Interval** and choose the time interval in **Frequency** to determine how long after an item is overdue the fee is applied and the notice is sent. See example in [Additional topics > Fees and fines](../../../access/additional-topics/feesfines/feesfines/#reminder-fees).
 2. Enter a **Fee** amount.
-3. Choose a **Notice method**. **Email** will send an email to the address in the user record. Select **Print** if you want to [send a printed notice](../../../users#view-patron-print-jobs).
+3. Choose a **Notice method**. **Email** will send an email to the address in the user record. Select **Print** if you want to [send a printed notice](../../../users#view-patron-notice-print-jobs).
 4. Select a fee/fine **Notice template** that aligns with the Notice method chosen in the previous step.
 5. **Block template** functionality is not yet available. Block templates are set up in [Settings > Users > Patron Block Templates](../../settings_users/settings_users/#settings--users--patron-block-templates).
 6. Click **Add reminder fee** again to add another reminder fee. Reminder fees after the first in the sequence are created [**Interval**]  [**Frequency**] after the previous reminder fee. 
@@ -732,7 +742,7 @@ Click **Save** at the bottom of the screen to save any changes.
 
 ## Settings > Circulation > Print hold requests
 
-**Allow print hold requests (Open - Not yet filled)**. Check the box if you want the option to print [Search slips](../../../access/requests/requests/printing-hold-request-search-slips) for item level hold requests.
+**Allow print hold requests (Open - Not yet filled)**. Check the box if you want the option to print [Search slips](../../../access/requests/requests/#printing-hold-request-search-slips) for item level hold requests.
 
 Click **Save** at the bottom of the screen to save any changes.
 

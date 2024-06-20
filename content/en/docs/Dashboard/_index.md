@@ -1,9 +1,11 @@
 ---
 title: "Dashboard"
 linkTitle: "Dashboard"
-date: 2023-11-15
+date: 2024-05-01
 weight: 635
 ---
+
+**This section of the documentation contains links to external sites. Please be advised that these sites are not maintained by the FOLIO Documentation Group and may not be aligned with the current release of FOLIO.**
 
 
 The Dashboard app is designed to enable a personalized view of key information from across FOLIO apps at a glance. In its first release (included in the Juniper flower release), the Dashboard includes the ability to display information from the [Agreements]() and [Licenses]() applications.
@@ -68,7 +70,7 @@ Upon accessing the Dashboard application for the first time, the user is present
 3. Select a **Widget definition** from the drop-down list.
     *   The widget definition determines the type of widget being added to the dashboard, and comes with its own configuration options.
     *   The widget definitions are created by the applications that support the dashboard, so which widget definitions are available depends on the applications you have installed in your FOLIO tenant.
-    *   In the Poppy release the Agreements app comes with three dashboard widgets ("ERM Agreements," "ERM Agreement Jobs," and “ERM Agreement Lines”) and the Licenses app comes with one dashboard widget ("ERM Licenses"). There are examples of how you can use these four widget definitions to achieve a wide range of outcomes in the [Example widget configurations](https://wiki.folio.org/display/FOLIOtips/Example+widget+configurations) documentation.
+    *   In the Quesnelia release the Agreements app comes with three dashboard widgets ("ERM Agreements," "ERM Agreement Jobs," and “ERM Agreement Lines”) and the Licenses app comes with one dashboard widget ("ERM Licenses"). There are examples of how you can use these four widget definitions to achieve a wide range of outcomes in the [Example widget configurations](https://wiki.folio.org/display/FOLIOtips/Example+widget+configurations) documentation.
 4. Complete the required fields.
 5. Click **Save & close**. The widget is saved and appears in the Dashboard pane.
 
